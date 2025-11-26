@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoPredictor AI | Pro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="brand">Crypto<span>AI</span></div>
+        
+        <div class="menu-item active">📊 Dashboard</div>
+        <div class="menu-item">🤖 Ask AI (Soon)</div>
+        <a href="{{ url_for('toggle_alerts') }}" class="menu-item">
+            🔔 Alerts: 
+            <span style="color: {{ '#00ff88' if user.alerts_enabled else '#ff4444' }}">
+                {{ 'ON' if user.alerts_enabled else 'OFF' }}
+            </span>
+        </a>
+        <a href="{{ url_for('logout') }}" class="menu-item" style="color: #ff4444;">🚪 Logout</a>
+
+        <div class="watchlist">
+            <div class="watchlist-title">WATCHLIST</div>
+            <div class="coin-row">
+                <span>BTC/USDT</span>
+                <span style="color:#00ff88">+2.4%</span>
+            </div>
+            <div class="coin-row">
+                <span>ETH/USDT</span>
+                <span style="color:#ff4444">-0.5%</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        
+        <div class="top-bar">
+            <div class="status-indicator">
+                <div class="data-box">
+                    <span class="data-label">BTC PRICE</span>
+                    <span class="data-value" id="live-price" style="color:#00ff88">Loading...</span>
+                </div>
+                <div class="data-box">
+                    <span class="data-label">RSI (14)</span>
+                    <span class="data-value" id="live-rsi">--</span>
+                </div>
+                <div class="data-box">
+                    <span class="data-label">SENTIMENT</span>
+                    <span class="data-value" id="live-sentiment">--</span>
+                </div>
+                <div class="data-box">
+                    <span class="data-label">FEAR & GREED</span>
+                    <span class="data-value" id="live-fng">--</span>
+                </div>
+            </div>
+            <div>
+                <span style="font-size:12px; color:#555;">Logged in as: {{ user.username }}</span>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <div class="tradingview-widget-container" style="height:100%;width:100%">
+              <div id="tradingview_12345" style="height:calc(100% - 32px);width:100%"></div>
+              <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+              <script type="text/javascript">
+              new TradingView.widget(
+              {
+              "autosize": true,
+              "symbol": "BINANCE:BTCUSDT",
+              "interval": "240",
+              "timezone": "Etc/UTC",
+              "theme": "dark",
+              "style": "1",
+              "locale": "en",
+              "enable_publishing": false,
+              "hide_top_toolbar": false,
+              "save_image": false,
+              "container_id": "tradingview_12345"
+              }
+              );
+              </script>
+            </div>
+            </div>
+
+        <div class="bottom-panel">
+            <div class="signal-card">
+                <div class="data-label">AI SIGNAL</div>
+                <div class="value" style="font-size: 20px; font-weight: bold; color: #00ff88; margin-top: 10px;">BUY</div>
+            </div>
+            <div class="signal-card">
+                <div class="data-label">CONFIDENCE</div>
+                <div class="value" style="margin-top: 10px;">High (Low Risk)</div>
+            </div>
+            <div class="signal-card">
+                <div class="data-label">PREDICTED MOVE</div>
+                <div class="value" style="margin-top: 10px;">+2.34%</div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
